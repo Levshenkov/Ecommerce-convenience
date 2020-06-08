@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate-skillcrucial",
+  "name": "boilerplate",
   "version": "0.0.2",
-  "description": "Boilerplate SkillCrucial",
+  "description": "Boilerplate",
   "main": "index.js",
   "scripts": {
     "docker-start-dev": "docker-compose -f \"docker\\DEV.docker-compose.yml\" up",
@@ -73,6 +73,7 @@
     "@storybook/addon-viewport": "^5.3.19",
     "@storybook/cli": "^5.3.19",
     "autoprefixer": "^9.8.0",
+    "axios": "^0.19.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "^26.0.1",
@@ -114,6 +115,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "sockjs": "^0.3.20",
     "sockjs-client": "^1.4.0",
     "string-replace-webpack-plugin": "^0.1.3",

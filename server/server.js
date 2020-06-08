@@ -5,11 +5,12 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
-
 import cookieParser from 'cookie-parser'
 import config from './config'
 
 import Html from '../client/html'
+
+const { readFile } = require('fs').promises
 
 let Root = () => ''
 
@@ -17,6 +18,7 @@ try {
   // eslint-disable-next-line import/no-unresolved
   Root = require('../dist/assets/js/root.bundle')
 } catch (ex) {
+  // eslint-disable-next-line no-console
   console.log(' run yarn build:prod to enable ssr')
 }
 
@@ -34,6 +36,13 @@ const middleware = [
 ]
 
 middleware.forEach((it) => server.use(it))
+
+server.get('/api/v1/data', async (req, res) => {
+  const items = await readFile(`${__dirname}/data.json`, { encoding: 'utf8' }).then((data) =>
+    JSON.parse(data)
+  )
+  res.json(items)
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
@@ -82,4 +91,5 @@ if (config.isSocketsEnabled) {
   })
   echo.installHandlers(app, { prefix: '/ws' })
 }
+// eslint-disable-next-line no-console
 console.log(`Serving at http://localhost:${port}`)
