@@ -3,6 +3,7 @@ import path from 'path'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
+import axios from 'axios'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
 import cookieParser from 'cookie-parser'
@@ -10,7 +11,7 @@ import config from './config'
 
 import Html from '../client/html'
 
-const { readFile } = require('fs').promises
+const data = require('./data')
 
 let Root = () => ''
 
@@ -37,11 +38,19 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.get('/api/v1/data', async (req, res) => {
-  const items = await readFile(`${__dirname}/data.json`, { encoding: 'utf8' }).then((data) =>
-    JSON.parse(data)
-  )
-  res.json(items)
+server.post('/api/v1/logs', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req.body)
+  res.json(req.body)
+})
+
+server.get('/api/v1/products', (req, res) => {
+  res.json(data.slice(0, 10))
+})
+
+server.get('/api/v1/rates', async (req, res) => {
+  const { data: rates } = await axios('https://api.exchangeratesapi.io/latest?symbols=USD,CAD')
+  res.json(rates)
 })
 
 server.use('/api/', (req, res) => {

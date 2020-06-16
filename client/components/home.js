@@ -1,18 +1,16 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Header from './header'
 import Logs from './logs'
-import Basket from './basket'
+import Cart from './cart'
 import Main from './main'
 import Dummy from './dummy-view'
 
 const Home = () => {
   return (
     <div>
-      <Header />
       <Switch>
         <Route exact path="/" component={() => <Main />} />
-        <Route exact path="/basket" component={() => <Basket />} />
+        <Route exact path="/basket" component={() => <Cart />} />
         <Route exact path="/logs" component={() => <Logs />} />
         <Route exact path="/*" component={() => <Dummy />} />
       </Switch>
