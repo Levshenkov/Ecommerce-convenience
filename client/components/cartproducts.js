@@ -1,17 +1,24 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addSelection, removeSelection } from '../redux/reducers/products'
+import { removeFromCart } from '../redux/reducers/cart'
 
 const CartProducts = () => {
+  const dispatch = useDispatch()
   const list = useSelector((s) => s.cart.list)
   // const productsList = useSelector((s) => s.products.list)
-
-  const ArrListID = list.filter((item, index) => {
-    return list.indexOf(item) === index
-  })
+  const selection = useSelector((s) => s.products.selection)
+  const base = useSelector((s) => s.products.base)
+  const rates = useSelector((s) => s.products.rates)
+  const getPrice = (id) => list.find((it) => it.id === id).price
+  const sum = Object.entries(selection).reduce(
+    (acc, [id, qty]) => acc + getPrice(id) * qty * (rates[base] || 1),
+    0
+  )
 
   return (
     <div>
-      {ArrListID.map((card) => {
+      {list.map((card) => {
         return (
           <div key={card.id}>
             <section className="my-4">
@@ -27,28 +34,41 @@ const CartProducts = () => {
                   <div className="p-4 flex-1">
                     <div className="flex justify-between items-center flex-wrap">
                       <h2 className="text-2xl">{card.title}</h2>
-                      <div className="space-x-1">
+                      <div className="flex justify-between items-center space-x-1">
                         <button
                           type="button"
                           className="bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
+                          onClick={() => {
+                            dispatch(addSelection(card.id))
+                          }}
                         >
                           Add
                         </button>
+                        <div>{selection[card.id] || 0}</div>
                         <button
                           type="button"
                           className="bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
+                          onClick={() => {
+                            if (selection[card.id] > 1) {
+                              dispatch(removeSelection(card.id))
+                            }
+                            if (selection[card.id] === 1) {
+                              dispatch(removeSelection(card.id))
+                              dispatch(removeFromCart(card))
+                            }
+                          }}
                         >
                           Remove
                         </button>
+                        <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
+                          {card.price * selection[card.id]} of {sum}
+                        </span>
                       </div>
                     </div>
                     <p className="my-2 text-justify">{card.description}</p>
-                    <button
-                      type="button"
-                      className="flex space-x-1 bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2"
-                    >
-                      Call to action
-                    </button>
+                    <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
+                      {card.price}
+                    </span>
                   </div>
                 </div>
               </div>

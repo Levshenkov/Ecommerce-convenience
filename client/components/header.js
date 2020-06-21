@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,15 +7,19 @@ import { setBase, getSortProducts } from '../redux/reducers/products'
 const Header = () => {
   const dispatch = useDispatch()
   const base = useSelector((s) => s.products.base)
+
   const rates = useSelector((s) => s.products.rates)
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
   const getPrice = (id) => list.find((it) => it.id === id).price
   const numberOfItems = Object.values(selection).reduce((acc, rec) => acc + rec, 0)
-  const sum = Object.entries(selection).reduce(
-    (acc, [id, qty]) => acc + getPrice(id) * qty * (rates[base] || 1),
-    0
-  )
+  const sum = Object.entries(selection).reduce((acc, [id, qty]) => {
+    if (qty < 0) {
+      return acc
+    }
+    const res = acc + getPrice(id) * qty * (rates[base] || 1)
+    return res
+  }, 0)
   return (
     <nav className="flex justify-between flex-wrap bg-gray-800 p-6">
       <div id="brand-name" className="flex justify-start flex-shrink-0 text-gray-400 mr-6">
@@ -59,9 +64,9 @@ const Header = () => {
             )
           })}
         </div>
-        <div className="pl-5 pr-5">{numberOfItems}</div>
+        <div className="pl-5 pr-5">{numberOfItems || 0}</div>
         <div id="order-count" className="mr-3">
-          <Link to="/basket">Total price: {sum.toFixed(2)}</Link>
+          <Link to="/basket">{(!isNaN(sum) && sum.toFixed(2)) || '0.00'}</Link>
         </div>
       </div>
     </nav>

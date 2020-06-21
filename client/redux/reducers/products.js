@@ -9,7 +9,8 @@ const initialState = {
   list: [],
   selection: {},
   rates: {},
-  base: 'EUR'
+  base: 'EUR',
+  sortBy: ''
 }
 
 export default (state = initialState, action) => {
