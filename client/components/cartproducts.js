@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addSelection, removeSelection } from '../redux/reducers/products'
+import { addSelection, removeSelection, getSortProducts } from '../redux/reducers/products'
 import { removeFromCart } from '../redux/reducers/cart'
 
 const CartProducts = () => {
@@ -8,6 +8,7 @@ const CartProducts = () => {
   const list = useSelector((s) => s.cart.list)
   // const productsList = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
+  const sortBy = useSelector((s) => s.products.sortBy)
   const base = useSelector((s) => s.products.base)
   const rates = useSelector((s) => s.products.rates)
   const getPrice = (id) => list.find((it) => it.id === id).price
@@ -18,7 +19,7 @@ const CartProducts = () => {
 
   return (
     <div>
-      {list.map((card) => {
+      {getSortProducts(list, sortBy).map((card) => {
         return (
           <div key={card.id}>
             <section className="my-4">

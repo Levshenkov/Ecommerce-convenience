@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addSelection, removeSelection } from '../redux/reducers/products'
+import { addSelection, removeSelection, getSortProducts } from '../redux/reducers/products'
 import { addToCart } from '../redux/reducers/cart'
 
 const Items = () => {
@@ -9,6 +9,7 @@ const Items = () => {
   const selection = useSelector((s) => s.products.selection)
   const base = useSelector((s) => s.products.base)
   const rates = useSelector((s) => s.products.rates)
+  const sortBy = useSelector((s) => s.products.sortBy)
 
   const symbols = {
     USD: '$',
@@ -18,7 +19,7 @@ const Items = () => {
 
   return (
     <div className="flex flex-wrap content-center justify-center">
-      {list.map((card) => {
+      {getSortProducts(list, sortBy).map((card) => {
         return (
           <div
             className="border-2 flex flex-col border-solid border-black w-64 h-64 p-2 m-4"

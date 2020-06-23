@@ -2,12 +2,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setBase, getSortProducts } from '../redux/reducers/products'
+import { setBase, getSortBy } from '../redux/reducers/products'
 
 const Header = () => {
   const dispatch = useDispatch()
   const base = useSelector((s) => s.products.base)
-
+  // const sortBy = useSelector((s) => s.products.sortBy)
   const rates = useSelector((s) => s.products.rates)
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
@@ -33,7 +33,10 @@ const Header = () => {
             id="sort-price"
             type="button"
             className="mr-3 border-1"
-            onClick={() => dispatch(getSortProducts(list, '0-9'))}
+            onClick={() => {
+              // dispatch(getSortBy('0-9'))
+              dispatch(getSortBy('0-9'))
+            }}
           >
             Sort by price
           </button>
@@ -43,7 +46,10 @@ const Header = () => {
             id="sort-name"
             type="button"
             className="mr-10 border-1"
-            onClick={() => dispatch(getSortProducts(list, 'a-z'))}
+            onClick={() => {
+              // dispatch(getSortBy('a-z'))
+              dispatch(getSortBy('a-z'))
+            }}
           >
             Sort by name
           </button>

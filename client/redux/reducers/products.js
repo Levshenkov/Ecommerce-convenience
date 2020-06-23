@@ -3,7 +3,8 @@ const ADD_TO_SELECTION = 'ADD_TO_SELECTION'
 const REMOVE_FROM_SELECTION = 'REMOVE_FROM_SELECTION'
 const GET_RATES = '@@GET_RATES'
 const SET_BASE = 'SET_BASE'
-const GET_SORT_PRODUCTS = 'GET_SORT_PRODUCTS'
+// const GET_SORT_PRODUCTS = 'GET_SORT_PRODUCTS'
+const SET_SORT_BY = 'SET_SORT_BY'
 
 const initialState = {
   list: [],
@@ -47,8 +48,11 @@ export default (state = initialState, action) => {
     case GET_PRODUCTS:
       return { ...state, list: action.list }
 
-    case GET_SORT_PRODUCTS:
-      return { ...state, list: action.list }
+    // case GET_SORT_PRODUCTS:
+    //   return { ...state, list: action.list }
+
+    case SET_SORT_BY:
+      return { ...state, sortBy: action.sortBy }
 
     default:
       return state
@@ -87,16 +91,14 @@ export function getProducts() {
 
 export function getSortProducts(list, sortBy) {
   if (sortBy === '0-9') {
-    return {
-      type: GET_SORT_PRODUCTS,
-      list: [...list].sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
-    }
+    return [...list].sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
   }
   if (sortBy === 'a-z') {
-    return {
-      type: GET_SORT_PRODUCTS,
-      list: [...list].sort((a, b) => a.title.localeCompare(b.title))
-    }
+    return [...list].sort((a, b) => a.title.localeCompare(b.title))
   }
-  return { type: GET_SORT_PRODUCTS, list }
+  return list
+}
+
+export function getSortBy(sortBy) {
+  return { type: SET_SORT_BY, sortBy }
 }
