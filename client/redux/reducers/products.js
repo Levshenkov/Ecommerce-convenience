@@ -3,7 +3,6 @@ const ADD_TO_SELECTION = 'ADD_TO_SELECTION'
 const REMOVE_FROM_SELECTION = 'REMOVE_FROM_SELECTION'
 const GET_RATES = '@@GET_RATES'
 const SET_BASE = 'SET_BASE'
-// const GET_SORT_PRODUCTS = 'GET_SORT_PRODUCTS'
 const SET_SORT_BY = 'SET_SORT_BY'
 
 const initialState = {
@@ -47,9 +46,6 @@ export default (state = initialState, action) => {
 
     case GET_PRODUCTS:
       return { ...state, list: action.list }
-
-    // case GET_SORT_PRODUCTS:
-    //   return { ...state, list: action.list }
 
     case SET_SORT_BY:
       return { ...state, sortBy: action.sortBy }

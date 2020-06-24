@@ -7,7 +7,7 @@ import { setBase, getSortBy } from '../redux/reducers/products'
 const Header = () => {
   const dispatch = useDispatch()
   const base = useSelector((s) => s.products.base)
-  // const sortBy = useSelector((s) => s.products.sortBy)
+
   const rates = useSelector((s) => s.products.rates)
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
@@ -36,7 +36,6 @@ const Header = () => {
               type="button"
               className="mr-3 border-1"
               onClick={() => {
-                // dispatch(getSortBy('0-9'))
                 dispatch(getSortBy('0-9'))
               }}
             >
@@ -51,7 +50,6 @@ const Header = () => {
               type="button"
               className="mr-10 border-1"
               onClick={() => {
-                // dispatch(getSortBy('a-z'))
                 dispatch(getSortBy('a-z'))
               }}
             >

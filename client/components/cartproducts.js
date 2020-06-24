@@ -6,7 +6,7 @@ import { removeFromCart } from '../redux/reducers/cart'
 const CartProducts = () => {
   const dispatch = useDispatch()
   const list = useSelector((s) => s.cart.list)
-  // const productsList = useSelector((s) => s.products.list)
+
   const selection = useSelector((s) => s.products.selection)
   const sortBy = useSelector((s) => s.products.sortBy)
   const base = useSelector((s) => s.products.base)
