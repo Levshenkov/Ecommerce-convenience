@@ -62,7 +62,7 @@ const CartProducts = () => {
                           Remove
                         </button>
                         <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
-                          {card.price * selection[card.id]} of {sum}
+                          {card.price * selection[card.id]}
                         </span>
                       </div>
                     </div>
@@ -77,6 +77,9 @@ const CartProducts = () => {
           </div>
         )
       })}
+      <div className="flex justify-center bg-blue-600 text-white rounded">
+        {sum !== 0 && <div>Total price: {sum}</div>}
+      </div>
     </div>
   )
 }

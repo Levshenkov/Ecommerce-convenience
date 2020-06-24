@@ -12,6 +12,7 @@ const Header = () => {
   const list = useSelector((s) => s.products.list)
   const selection = useSelector((s) => s.products.selection)
   const getPrice = (id) => list.find((it) => it.id === id).price
+  const { pathname } = window.location
   const numberOfItems = Object.values(selection).reduce((acc, rec) => acc + rec, 0)
   const sum = Object.entries(selection).reduce((acc, [id, qty]) => {
     if (qty < 0) {
@@ -28,32 +29,36 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex justify-end text-gray-400">
-        <div>
-          <button
-            id="sort-price"
-            type="button"
-            className="mr-3 border-1"
-            onClick={() => {
-              // dispatch(getSortBy('0-9'))
-              dispatch(getSortBy('0-9'))
-            }}
-          >
-            Sort by price
-          </button>
-        </div>
-        <div>
-          <button
-            id="sort-name"
-            type="button"
-            className="mr-10 border-1"
-            onClick={() => {
-              // dispatch(getSortBy('a-z'))
-              dispatch(getSortBy('a-z'))
-            }}
-          >
-            Sort by name
-          </button>
-        </div>
+        {pathname !== '/basket' && (
+          <div>
+            <button
+              id="sort-price"
+              type="button"
+              className="mr-3 border-1"
+              onClick={() => {
+                // dispatch(getSortBy('0-9'))
+                dispatch(getSortBy('0-9'))
+              }}
+            >
+              Sort by price
+            </button>
+          </div>
+        )}
+        {pathname !== '/basket' && (
+          <div>
+            <button
+              id="sort-name"
+              type="button"
+              className="mr-10 border-1"
+              onClick={() => {
+                // dispatch(getSortBy('a-z'))
+                dispatch(getSortBy('a-z'))
+              }}
+            >
+              Sort by name
+            </button>
+          </div>
+        )}
         <div>
           {['CAD', 'USD', 'EUR'].map((it) => {
             return (
@@ -71,9 +76,11 @@ const Header = () => {
           })}
         </div>
         <div className="pl-5 pr-5">{numberOfItems || 0}</div>
-        <div id="order-count" className="mr-3">
-          <Link to="/basket">{(!isNaN(sum) && sum.toFixed(2)) || '0.00'}</Link>
-        </div>
+        {pathname !== '/basket' && (
+          <div id="order-count" className="mr-3">
+            <Link to="/basket">{(!isNaN(sum) && sum.toFixed(2)) || '0.00'}</Link>
+          </div>
+        )}
       </div>
     </nav>
   )
