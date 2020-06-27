@@ -1,7 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Logs = () => {
-  return <div>Logs</div>
+  const logs = useSelector((s) => s.products.logs)
+  return (
+    <div>
+      {logs.map((log) => {
+        return <div key={log.type}>{JSON.stringify(log)}</div>
+      })}
+    </div>
+  )
 }
 
 Logs.propTypes = {}

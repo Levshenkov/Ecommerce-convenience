@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Header from './header'
 import Items from './item'
-import { getProducts, getRates } from '../redux/reducers/products'
+import { getProducts, getRates, getLogs } from '../redux/reducers/products'
 
 const Main = () => {
   const dispatch = useDispatch()
@@ -10,6 +10,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(getProducts())
     dispatch(getRates())
+    dispatch(getLogs())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

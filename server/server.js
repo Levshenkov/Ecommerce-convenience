@@ -11,6 +11,7 @@ import config from './config'
 
 import Html from '../client/html'
 
+const { readFile, writeFile, unlink } = require('fs').promises
 const data = require('./data')
 
 let Root = () => ''
@@ -38,10 +39,30 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.post('/api/v1/logs', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req.body)
-  res.json(req.body)
+server.get('/api/v1/logs', async (req, res) => {
+  const logs = JSON.parse(await readFile(`${__dirname}/logs.json`, { encoding: 'utf8' }))
+  res.json(logs)
+})
+
+server.delete('/api/v1/logs', (req, res) => {
+  unlink(`${__dirname}/logs.json`)
+  res.json({ status: 'deleted' })
+})
+
+server.post('/api/v1/logs', async (req, res) => {
+  const { body } = req
+  try {
+    const logs = JSON.parse(await readFile(`${__dirname}/logs.json`, { encoding: 'utf8' }))
+    writeFile(`${__dirname}/logs.json`, JSON.stringify([...logs, { ...body, date: +new Date() }]), {
+      encoding: 'utf8'
+    })
+    res.json({ status: 'log added', logs })
+  } catch {
+    writeFile(`${__dirname}/logs.json`, JSON.stringify([{ ...body, date: +new Date() }]), {
+      encoding: 'utf8'
+    })
+    res.json({ status: 'logs file created' })
+  }
 })
 
 server.get('/api/v1/products', (req, res) => {

@@ -4,13 +4,15 @@ const REMOVE_FROM_SELECTION = 'REMOVE_FROM_SELECTION'
 const GET_RATES = '@@GET_RATES'
 const SET_BASE = 'SET_BASE'
 const SET_SORT_BY = 'SET_SORT_BY'
+const GET_LOGS = '@@GET_LOGS'
 
 const initialState = {
   list: [],
   selection: {},
   rates: {},
   base: 'EUR',
-  sortBy: ''
+  sortBy: '',
+  logs: []
 }
 
 export default (state = initialState, action) => {
@@ -50,6 +52,9 @@ export default (state = initialState, action) => {
     case SET_SORT_BY:
       return { ...state, sortBy: action.sortBy }
 
+    case GET_LOGS:
+      return { ...state, logs: action.logs }
+
     default:
       return state
   }
@@ -81,6 +86,16 @@ export function getProducts() {
       .then((res) => res.json())
       .then((list) => {
         dispatch({ type: GET_PRODUCTS, list })
+      })
+  }
+}
+
+export function getLogs() {
+  return (dispatch) => {
+    fetch('/api/v1/logs')
+      .then((res) => res.json())
+      .then((logs) => {
+        dispatch({ type: GET_LOGS, logs })
       })
   }
 }

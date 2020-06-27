@@ -27,6 +27,9 @@ const Header = () => {
         <Link to="/" className="mr-3">
           Shopping
         </Link>
+        <Link to="/logs" className="mr-3">
+          Logs
+        </Link>
       </div>
       <div className="flex justify-end text-gray-400">
         {pathname !== '/basket' && (
