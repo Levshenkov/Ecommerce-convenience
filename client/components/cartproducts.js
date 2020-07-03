@@ -29,7 +29,7 @@ const CartProducts = () => {
                     <img
                       src={card.image}
                       alt={card.description}
-                      className="object-cover transform group-hover:scale-110 transition-all duration-500 ease-in-out h-56 w-full bg-gray-300"
+                      className="object-cover transform group-hover:scale-110 transition-all duration-500 ease-in-out h-56 w-56 bg-gray-300"
                     />
                   </div>
                   <div className="p-4 flex-1">

@@ -22,18 +22,18 @@ const Items = () => {
       {getSortProducts(list, sortBy).map((card) => {
         return (
           <div
-            className="border-2 flex flex-col border-solid border-black w-64 h-64 p-2 m-4"
+            className="flex flex-col shadow-md hover:shadow-lg border-solid border-black w-64 h-64 p-2 m-4 rounded-md"
             key={card.id}
           >
             <div className="flex justify-center">
-              <img className="h-32 w-full" src={card.image} alt={card.title} />
+              <img className="h-32 w-full rounded-md" src={card.image} alt={card.title} />
             </div>
             <div>{card.title} </div>
             <div className="pt-2">
               {(card.price * (rates[base] || 1)).toFixed(2)} {symbols[base]}
             </div>
 
-            <div className="flex p-10 justify-between">
+            <div className="flex pt-15 m-5 justify-between bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap">
               <button
                 type="button"
                 onClick={() => {

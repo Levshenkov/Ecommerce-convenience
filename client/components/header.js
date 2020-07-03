@@ -21,6 +21,13 @@ const Header = () => {
     const res = acc + getPrice(id) * qty * (rates[base] || 1)
     return res
   }, 0)
+
+  const symbols = {
+    USD: '$',
+    EUR: '€',
+    CAD: 'CA$'
+  }
+
   return (
     <nav className="flex justify-between flex-wrap bg-gray-800 p-6">
       <div id="brand-name" className="flex justify-start flex-shrink-0 text-gray-400 mr-6">
@@ -79,7 +86,9 @@ const Header = () => {
         <div className="pl-5 pr-5">{numberOfItems || 0}</div>
         {pathname !== '/basket' && (
           <div id="order-count" className="mr-3">
-            <Link to="/basket">{(!isNaN(sum) && sum.toFixed(2)) || '0.00'}</Link>
+            <Link to="/basket">
+              {(!isNaN(sum) && sum.toFixed(2)) || '0.00'} {symbols[base]}
+            </Link>
           </div>
         )}
       </div>
