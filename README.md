@@ -4,7 +4,7 @@
 
 1. Clone this repo using:
   ```shell
-  $ git clone git@github.com:Levshenkov/git-api-react.git
+  $ git clone git@github.com:Levshenkov/Ecommerce-convenience.git
   ```
 
 2. To install dependencies and clean the git repo run:
