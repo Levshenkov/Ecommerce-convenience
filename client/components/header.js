@@ -83,14 +83,15 @@ const Header = () => {
             )
           })}
         </div>
-        <div className="pl-5 pr-5">{numberOfItems || 0}</div>
         {pathname !== '/basket' && (
-          <div id="order-count" className="mr-3">
-            <Link to="/basket">
+          <div id="order-count" className="mr-3 flex flex-row pl-6">
+            <img className="w-6 h-6" src="https://img.icons8.com/fluent/48/000000/shopping-cart.png" alt="cart"/>
+            <Link className="pl-2" to="/basket">
               {(!isNaN(sum) && sum.toFixed(2)) || '0.00'} {symbols[base]}
             </Link>
           </div>
         )}
+        {pathname !== '/basket' && (<div className="pl-5 pr-5">Items in cart: {numberOfItems || 0}</div>)}
       </div>
     </nav>
   )

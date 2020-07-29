@@ -29,7 +29,7 @@ const Items = () => {
               <img className="h-32 w-full rounded-md" src={card.image} alt={card.title} />
             </div>
             <div>{card.title} </div>
-            <div className="pt-2">
+            <div className="flex justify-center pt-2">
               {(card.price * (rates[base] || 1)).toFixed(2)} {symbols[base]}
             </div>
 

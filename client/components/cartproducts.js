@@ -17,6 +17,12 @@ const CartProducts = () => {
     0
   )
 
+  const symbols = {
+    USD: '$',
+    EUR: '€',
+    CAD: 'CA$'
+  }
+
   return (
     <div>
       {getSortProducts(list, sortBy).map((card) => {
@@ -35,20 +41,26 @@ const CartProducts = () => {
                   <div className="p-4 flex-1">
                     <div className="flex justify-between items-center flex-wrap">
                       <h2 className="text-2xl">{card.title}</h2>
-                      <div className="flex justify-between items-center space-x-1">
+                    </div>
+                    <p className="my-2 text-justify">{card.description}</p>
+                    <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
+                      {card.price} {symbols[base]}
+                    </span>
+                  </div>
+                  <div className="flex pr-12 flex-col justify-center items-center space-x-1">
                         <button
                           type="button"
-                          className="bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
+                          className="h-8 w-6 bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
                           onClick={() => {
                             dispatch(addSelection(card.id))
                           }}
                         >
-                          Add
+                          +
                         </button>
-                        <div>{selection[card.id] || 0}</div>
+                        <div className="flex justify-center border-2 border-blue-600 p-2 m-1">{selection[card.id] || 0}</div>
                         <button
                           type="button"
-                          className="bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
+                          className="h-8 w-6 bg-purple-700 text-white px-2 py-1 rounded-full uppercase text-sm whitespace-no-wrap"
                           onClick={() => {
                             if (selection[card.id] > 1) {
                               dispatch(removeSelection(card.id))
@@ -59,27 +71,18 @@ const CartProducts = () => {
                             }
                           }}
                         >
-                          Remove
+                          -
                         </button>
-                        <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
-                          {card.price * selection[card.id]}
-                        </span>
                       </div>
-                    </div>
-                    <p className="my-2 text-justify">{card.description}</p>
-                    <span className="bg-blue-600 text-white rounded px-4 py-2 w-15">
-                      {card.price}
-                    </span>
-                  </div>
                 </div>
               </div>
             </section>
           </div>
         )
       })}
-      <div className="flex justify-center bg-blue-600 text-white rounded">
-        {sum !== 0 && <div>Total price: {sum}</div>}
-      </div>
+      <span className="flex justify-center m-12 bg-blue-600 text-white rounded-full">
+        {sum !== 0 && <div>Total price: {sum} {symbols[base]}</div>}
+      </span>
     </div>
   )
 }
